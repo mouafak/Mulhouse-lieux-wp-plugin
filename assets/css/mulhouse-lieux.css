@@ -1,0 +1,98 @@
+.lieu-archive-container{
+    max-width: 1170px;
+    margin: 50px auto;
+    overflow-x: hidden;
+}
+
+.lieu-archive-container .lieu-container{
+    max-width: 100%;
+    height: 600px;
+    position:relative;
+    margin: 50px 10px;
+}
+
+.lieu-container .lieu-image{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 15px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.lieu-container .lieu-info{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    min-height: 50px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 20px;
+    border-radius: 0 0 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.lieu-container .lieu-info .group-titre-adresse {
+
+    width: 75%;
+    height: 100%;
+}
+
+.lieu-container .lieu-info .group-titre-adresse h2{
+    margin-top : unset;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.lieu-container .lieu-info .group-titre-adresse small{
+    font-style: italic;
+}
+
+.lieu-container .lieu-info .lieu-info-button{
+    background-color: #0270b5;
+    padding: 10px 20px;
+    border-radius: 15px;
+    color: #fff;
+    text-decoration: none;
+    width: 129px;
+}
+
+.lieu-container .lieu-info .lieu-info-button:hover{
+    background-color: #111;
+}
+
+@media screen and (max-width : 760px) {
+
+    .lieu-archive-container .lieu-container{
+        height: 100%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 15px;
+        margin: 50px 20px;
+    }
+    .lieu-container .lieu-image{
+        height: 400px;
+        display: block;
+        border-radius: 15px 15px 0px 0px;
+    }
+    
+    .lieu-container .lieu-info{
+        position: relative;
+        height: auto;
+        width: auto;
+        border-radius: 0px 0px 15px 15px;
+    }
+    .lieu-container .lieu-info .lieu-info-button{
+        position: relative;
+        bottom: unset;
+    }
+    
+}
+
+@media screen and (max-width : 520px) {
+    .lieu-container .lieu-info .group-titre-adresse{
+        padding-bottom: 20px;
+    }
+}
