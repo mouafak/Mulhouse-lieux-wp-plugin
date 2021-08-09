@@ -2,82 +2,177 @@
 
 class MulhouseLieuxMetaBox
 {
+    /**
+     * id of meta box
+     *
+     * @var string
+     */
+    private $mb_id;
+
+    /**
+     * title of meta box
+     *
+     * @var string
+     */
+    private $mb_title;
+
+    /**
+     * context of meta box
+     *
+     * @var string
+     */
+    private $mb_context;
+
+    /**
+     * priority of meta box
+     *
+     * @var string
+     */
+    private $mb_priority;
+
+    /**
+     * meta box screen
+     *
+     * @var string
+     */
+    private $mb_screen;
+
+    /**
+     * array de fields
+     *
+     * @var array
+     */
+    private $fields = [];
 
 
-    function __construct()
+    function __construct($mb_id, $mb_title, $mb_screen, $mb_context, $mb_priority)
     {
-        add_action('add_meta_boxes' , [ $this , "mulhouse_lieux_add_meta_box" ] );
-        add_action('save_post' , [$this , 'mulhouse_lieux_save_update_address_meta_box_data'] );
+
+        $this->mb_id = $mb_id;
+        $this->mb_title = $mb_title;
+        $this->mb_screen = $mb_screen;
+        $this->mb_context = $mb_context;
+        $this->mb_priority = $mb_priority;
+
+        add_action('add_meta_boxes', [$this, "create_meta_box"]);
+        add_action('save_post', [$this, 'save_update_delete_meta_box_data']);
     }
 
-    function mulhouse_lieux_add_meta_box()
+    /**
+     * Create meta box
+     *
+     * @return void
+     */
+    function create_meta_box()
     {
 
-        $id = "mulhouse_lieux_meta_box";
-        $title = "Paramètres pour Mulhouse lieux ";
-        $callback = [$this , "mulhouse_lieux_meta_box_callback"];
-        $screen = "mulhouse-lieux";
-        $context ="side";   
-        $priority = "high";
-        add_meta_box($id, $title, $callback, $screen , $context, $priority);
+        $id = $this->mb_id;
+        $title = $this->mb_title;
+        $callback = [$this, "meta_box_callback"];
+        $screen = $this->mb_screen;
+        $context = $this->mb_context;
+        $priority = $this->mb_priority;
+
+        add_meta_box($id, $title, $callback, $screen, $context, $priority);
     }
 
-    function mulhouse_lieux_meta_box_callback($post)
+    /**
+     * Callback for meta box
+     *
+     * @param [type] $post
+     * @return void
+     */
+    function meta_box_callback($post)
     {
 
-        //mange - update - save and a lot of code for our meta box
 
-        $action = "mulhouse_lieux_save_update_address_meta_box_data";
-        $name = "mulhouse_lieux_address_meta_box_nonce";
-        wp_nonce_field($action, $name);
+        if (!empty($this->fields)) {
 
-        $post_id = $post->ID;
-        $key = "_address_meta_box_value_key";
-        $single = true;
-        $value = get_post_meta($post_id, $key, $single);
-   
-        echo
-        '
-        <label for="mulhouse_lieux_address_filed" > l\'adresse postale : </label>
-        <input type="text" id="mulhouse_lieux_address_filed" name ="mulhouse_lieux_address_filed" value="' . esc_attr($value) . '" size="25" />
-        ';
+            $action = $this->mb_id . "_action";
+            $name = $this->mb_id . "_nonce";
+            wp_nonce_field($action, $name);
+
+            foreach ($this->fields as $field) {
+
+                extract($field);
+                $post_id = $post->ID;
+                $key = $field_id . "_value_key";
+                $single = true;
+                $value = get_post_meta($post_id, $key, $single);
+
+                switch ($field_type) {
+                    case 'textarea':
+                        require plugin_dir_path(__FILE__) . "fields/textarea_field.php";
+                        break;
+
+                    default:
+                        require plugin_dir_path(__FILE__) . "fields/text_field.php";
+                        break;
+                }
+            }
+        }
     }
 
-    function mulhouse_lieux_save_update_address_meta_box_data($post_id)
+    /**
+     * Add params for every meta box
+     *
+     * @param [type] $field_id
+     * @param [type] $field_label
+     * @param [type] $field_type
+     * @return object
+     */
+    function add_field($field_id, $field_label, $field_type)
     {
 
-        $nonce = "mulhouse_lieux_address_meta_box_nonce";
-        $action = "mulhouse_lieux_save_update_address_meta_box_data";
+        $this->fields[] =
+            [
+                "field_id" => $field_id,
+                "field_label" => $field_label,
+                "field_type" => $field_type,
+            ];
 
-        if(! isset($_POST[$nonce]))
-        {
+        return $this;
+    }
+
+    /**
+     * save,update meta box
+     *
+     * @param [type] $post_id
+     * @return void
+     */
+    function save_update_delete_meta_box_data($post_id)
+    {
+
+        $nonce = $this->mb_id . "_nonce";
+        $action = $this->mb_id . "_action";
+
+        if (!wp_verify_nonce($_POST[$nonce], $action)) {
             return;
         }
 
-        if(! wp_verify_nonce( $_POST[$nonce], $action ))
-        {
-            return;
+        foreach ($this->fields as $field) {
+
+            extract($field);
+
+            if (defined("DOING_AUTOSAVE") && DOING_AUTOSAVE) {
+                return;
+            }
+
+            if (!current_user_can("edit_post", $post_id)) {
+                return;
+            }
+
+            if (!isset($_POST[$field_id . '_filed_id'])) {
+                return;
+            }
+
+            $str = $_POST[$field_id . '_filed_id'];
+
+            $meta_value = sanitize_text_field($str);
+
+            $meta_key = $field_id . "_value_key";
+
+            update_post_meta($post_id, $meta_key, $meta_value);
         }
-
-        if( defined("DOING_AUTOSAVE") && DOING_AUTOSAVE )
-        {
-            return;
-        }
-
-        if(! current_user_can("edit_post" , $post_id))
-        {
-            return;
-        }
-
-        if(! isset($_POST['mulhouse_lieux_address_filed']))
-        {
-            return;
-        }
-
-        $str = $_POST['mulhouse_lieux_address_filed'];
-        $meta_value = sanitize_text_field( $str );
-        $meta_key = "_address_meta_box_value_key";
-        update_post_meta( $post_id, $meta_key, $meta_value );
-
     }
 }

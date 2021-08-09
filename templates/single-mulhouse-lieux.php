@@ -1,45 +1,41 @@
 <?php
+
 /**
- * The template for displaying all single posts
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package WordPress
- * @subpackage Eduma
- * @since eduma
+ * The template for displaying all single post type mulhouse lieux
  */
 
 get_header();
-/**
- * thim_wrapper_loop_start hook
- *
- * @hooked thim_wrapper_loop_end - 1
- * @hooked thim_wapper_page_title - 5
- * @hooked thim_wrapper_loop_start - 30
- */
-
-do_action( 'thim_wrapper_loop_start' );
 ?>
 
-    <div class="page-content">
-		<?php
-		while ( have_posts() ) : the_post(); ?>
-			<?php get_template_part( 'content', 'single' ); ?>
-			<?php
-			// If comments are open or we have at least one comment, load up the comment template
-			if ( comments_open() || '0' != get_comments_number() ) :
-				comments_template();
-			endif;
-			?>
-		<?php endwhile; // end of the loop. ?>
-    </div>
+<div class="page-content">
+	<?php
+	while (have_posts()) : the_post(); ?>
+		<?php 
+			include plugin_dir_path(__FILE__)."content-single-mulhouse-lieux.php"; 
+		?>
+	<?php endwhile;
+	?>
+</div>
 <?php
-/**
- * thim_wrapper_loop_end hook
- *
- * @hooked thim_wrapper_loop_end - 10
- * @hooked thim_wrapper_div_close - 30
- */
-do_action( 'thim_wrapper_loop_end' );
+
+echo
+"
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibW91YWZhayIsImEiOiJja3MxbnN6dXUxdm55MnZuOHFpMjU1eTVnIn0.7Mx_gCUL5fUWYZFPt5KQqQ';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [-74.5, 40],
+zoom: 9,
+marker : true
+});
+map.addControl(new mapboxgl.NavigationControl());
+const marker = new mapboxgl.Marker() // Initialize a new marker
+.setLngLat([-74.5, 40]) // Marker [lng, lat] coordinates
+.addTo(map); // Add the marker to the map
+</script>
+";
 
 get_footer(); ?>
+
+

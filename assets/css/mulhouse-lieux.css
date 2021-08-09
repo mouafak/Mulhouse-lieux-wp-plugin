@@ -96,3 +96,9 @@
         padding-bottom: 20px;
     }
 }
+
+
+
+.mapboxgl-map{
+    min-height: 600px !important;
+}

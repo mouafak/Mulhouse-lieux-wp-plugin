@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Mulhouse lieux
  * Plugin URI:        https://mouafakalali.com
- * Description:       show events in front end.
+ * Description:       A plugin that allows you to show off your post type Mulhouse lieux...
  * Version:           1.0.0
  * Requires at least: 5.8
  * Requires PHP:      7.2
@@ -25,7 +25,9 @@
 }
 
 if(class_exists("MulhouseLieuxMetaBox")){
-    new MulhouseLieuxMetaBox();
+    $metaBox = new MulhouseLieuxMetaBox("mulhouse_lieux_address_meta_box" ,"Mulhouse lieux paramètres" , "mulhouse-lieux" , "normal" , "default");
+    $metaBox->add_field("adresse_postal" , "L'adresse postal : " , "text")
+    ->add_field("access_token" , "Access token : " , "textarea");
 }
 
 register_activation_hook(__FILE__ , [$mulhouseLieux , "activate"]);
