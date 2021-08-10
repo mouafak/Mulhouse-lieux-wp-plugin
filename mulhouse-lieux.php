@@ -15,6 +15,8 @@
 
  defined("ABSPATH") or die;
 
+ define("PFLDIR" , plugin_dir_path(__FILE__));
+
  require_once plugin_dir_path(__FILE__)."core/MulhouseLieuxClass.php";
  require_once plugin_dir_path(__FILE__)."core/MulhouseLieuxMetaBox.php";
 

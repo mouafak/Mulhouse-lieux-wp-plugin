@@ -31,7 +31,7 @@ get_header();
 									<path id="Icon_awesome-map-marker-alt" data-name="Icon awesome-map-marker-alt" 				d="M5.5,16.021C.861,9.294,0,8.6,0,6.132a6.132,6.132,0,1,1,12.263,0c0,2.472-.861,3.163-5.5,9.89a.767.767,0,0,1-1.26,0Zm.63-7.335A2.555,2.555,0,1,0,3.577,6.132,2.555,2.555,0,0,0,6.132,8.687Z" fill="#0270b5"/>
 								</svg>
 
-								</i> <?php get_post_meta( $post->ID, "_address_meta_box_value_key", true ); ?>
+								</i> <?php echo get_post_meta( $post->ID, "adresse_postal_value_key", true ); ?>
 							</small>
 						</div>
 						<a class="lieu-info-button" href="<?php the_permalink(); ?>">
