@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Mulhouse lieux
  * Plugin URI:        https://mouafakalali.com
@@ -13,25 +14,32 @@
  * Text Domain:       mouafakalali.com
  */
 
- defined("ABSPATH") or die;
+defined("ABSPATH") or die;
 
- define("PFLDIR" , plugin_dir_path(__FILE__));
+require_once plugin_dir_path(__FILE__) . "core/MulhouseLieuxClass.php";
 
- require_once plugin_dir_path(__FILE__)."core/MulhouseLieuxClass.php";
- require_once plugin_dir_path(__FILE__)."core/MulhouseLieuxMetaBox.php";
+require_once plugin_dir_path(__FILE__) . "core/MulhouseLieuxMetaBox.php";
 
- if(class_exists("MulhouseLieuxClass")){
+require_once plugin_dir_path(__FILE__) . "core/mulhouse-lieux-functions.php";
+
+
+if (class_exists("MulhouseLieuxClass")) {
 
     $mulhouseLieux = new MulhouseLieuxClass();
+
     $mulhouseLieux->register();
 }
 
-if(class_exists("MulhouseLieuxMetaBox")){
-    $metaBox = new MulhouseLieuxMetaBox("mulhouse_lieux_address_meta_box" ,"Mulhouse lieux paramètres" , "mulhouse-lieux" , "normal" , "default");
-    $metaBox->add_field("adresse_postal" , "L'adresse postal : " , "text")
-    ->add_field("access_token" , "Access token : " , "textarea");
+if (class_exists("MulhouseLieuxMetaBox")) {
+    $metaBox = new MulhouseLieuxMetaBox("mulhouse_lieux_address_meta_box", "Mulhouse lieux paramètres", "mulhouse-lieux", "normal", "default");
+
+    $metaBox->add_field("adresse_postal", "L'adresse postal : ", "text")
+    
+            ->add_field("access_token", "Access token : ", "textarea");
 }
 
-register_activation_hook(__FILE__ , [$mulhouseLieux , "activate"]);
-register_deactivation_hook(__FILE__ , [$mulhouseLieux , "deactivate"]);
-register_uninstall_hook(__FILE__ ,plugin_dir_path(__FILE__)."core/uninstall.php");
+register_activation_hook(__FILE__, [$mulhouseLieux, "activate"]);
+
+register_deactivation_hook(__FILE__, [$mulhouseLieux, "deactivate"]);
+
+register_uninstall_hook(__FILE__, plugin_dir_path(__FILE__) . "core/uninstall.php");
