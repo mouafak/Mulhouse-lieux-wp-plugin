@@ -44,6 +44,7 @@ class MulhouseLieuxClass
         add_filter("template_include", [$this, "customTemplates"]);
         add_action("wp_enqueue_scripts", [$this, "mulhouse_Lieux_enqueue_style"]);
         add_action("wp_enqueue_scripts", [$this, "mulhouse_lieux_enqueue_script"]);
+        add_action("admin_menu" , [$this , "mulhouseLieuxSettingPage"]);
     }
 
 
@@ -79,7 +80,19 @@ class MulhouseLieuxClass
         $verM = "1.0.0";
         $in_footerM = true;
         wp_enqueue_script( $handleM, $srcM, $depsM, $verM, $in_footerM );
-    }    
+    }
+
+    function mulhouseLieuxSettingPage(){
+
+        $parent_slug = "edit.php?post_type=mulhouse-lieux";
+        $page_title = "Settings";
+        $menu_title = "Settings";
+        $capability ="manage_options";
+        $menu_slug = "mulhouse-lieux-settings";
+        $function_callable = [$this,"mulhouseLieuxSettingsCallback"];
+        $position = null;
+        add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function_callable, $position );
+    }
 
     // Register Custom Post Type Mulhouse Lieux
 
@@ -175,5 +188,10 @@ class MulhouseLieuxClass
         }
 
         return $default_templates;
+    }
+
+    function mulhouseLieuxSettingsCallback(){
+        
+        include plugin_dir_path(__FILE__).'admin-templates/mulhouse-lieux-admin-settings.php';
     }
 }

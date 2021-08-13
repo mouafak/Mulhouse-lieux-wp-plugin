@@ -3,7 +3,7 @@
 
 class MapBoxAPI
 {
-    private $accessToken = "pk.eyJ1IjoibW91YWZhayIsImEiOiJja3MxbnN6dXUxdm55MnZuOHFpMjU1eTVnIn0.7Mx_gCUL5fUWYZFPt5KQqQ";
+    private $accessToken;
 
     private $adresse;
 
@@ -11,9 +11,26 @@ class MapBoxAPI
 
     function __construct($adresse)
     {
+        // $this->accessToken = get_option("setting_api_key");
+        $this->setAccessToken();
+
         $this->adresse = $adresse;
+
         $this->callApiMapBox();
 
+    }
+
+    private function setAccessToken() {
+        
+        if(! get_option("setting_api_key")){
+            return;
+        }
+        if(empty(get_option("setting_api_key")) ){
+            return;
+        }
+        
+
+        $this->accessToken = get_option("setting_api_key");
     }
 
     /**
@@ -26,7 +43,6 @@ class MapBoxAPI
 
 
     private function callApiMapBox(){
-        // $adresse = str_replace(" " , "%" , $this->adresse);
 
         $apiUrl = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'. str_replace(" ","%20", $this->adresse) .'.json?access_token='.$this->accessToken.'&imit=1';
 

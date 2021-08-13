@@ -22,6 +22,8 @@ require_once plugin_dir_path(__FILE__) . "core/MulhouseLieuxMetaBox.php";
 
 require_once plugin_dir_path(__FILE__) . "core/mulhouse-lieux-functions.php";
 
+require_once plugin_dir_path(__FILE__) . "core/MulhouseLieuxOptions.php";
+
 
 if (class_exists("MulhouseLieuxClass")) {
 
@@ -36,6 +38,13 @@ if (class_exists("MulhouseLieuxMetaBox")) {
     $metaBox->add_field("adresse_postal", "L'adresse postal : ", "text")
     
             ->add_field("access_token", "Access token : ", "textarea");
+}
+
+if (class_exists("MulhouseLieuxOptions")) {
+
+    $mulhouseLieux = new MulhouseLieuxOptions();
+
+    $mulhouseLieux->register();
 }
 
 register_activation_hook(__FILE__, [$mulhouseLieux, "activate"]);
