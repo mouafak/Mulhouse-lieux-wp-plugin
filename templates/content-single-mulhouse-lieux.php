@@ -34,6 +34,10 @@
                         </div>
 
                         <div class="entry-tag-share">
+                        <div id="map"></div>
+                        </div>
+
+                        <div class="entry-tag-share">
                             <div class="row">
                                 
                                 <div class="col-sm-6">
@@ -49,10 +53,6 @@
                                 </div>
                             </div>
 		                </div>
-
-                        <div class="entry-tag-share">
-                        <div id="map"></div>
-                        </div>
 
 		                <?php //do_action( 'thim_about_author' ); ?>
 

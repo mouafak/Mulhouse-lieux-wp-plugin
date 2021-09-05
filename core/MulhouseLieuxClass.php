@@ -85,8 +85,8 @@ class MulhouseLieuxClass
     function mulhouseLieuxSettingPage(){
 
         $parent_slug = "edit.php?post_type=mulhouse-lieux";
-        $page_title = "Settings";
-        $menu_title = "Settings";
+        $page_title = "Paramètres";
+        $menu_title = "Paramètres";
         $capability ="manage_options";
         $menu_slug = "mulhouse-lieux-settings";
         $function_callable = [$this,"mulhouseLieuxSettingsCallback"];

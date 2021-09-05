@@ -35,9 +35,7 @@ if (class_exists("MulhouseLieuxClass")) {
 if (class_exists("MulhouseLieuxMetaBox")) {
     $metaBox = new MulhouseLieuxMetaBox("mulhouse_lieux_address_meta_box", "Mulhouse lieux paramètres", "mulhouse-lieux", "normal", "default");
 
-    $metaBox->add_field("adresse_postal", "L'adresse postal : ", "text")
-    
-            ->add_field("access_token", "Access token : ", "textarea");
+    $metaBox->add_field("adresse_postal", "L'adresse postal : ", "text");
 }
 
 if (class_exists("MulhouseLieuxOptions")) {
