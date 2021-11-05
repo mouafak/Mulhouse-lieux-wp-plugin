@@ -43,7 +43,9 @@ function map_box_points($value)
 				"x" => $ml_map_points[1][0],
 
 				"y" => $ml_map_points[1][1]
-			]
+			],
+
+			"at" => get_option("setting_api_key")
 		];
 		return $value;
 	}
@@ -62,7 +64,9 @@ function map_box_points($value)
 			"x" => 7.33917,
 
 			"y" => 47.74861
-		]
+		],
+		
+		"at" => get_option("setting_api_key")
 	];
 
 	return $value;

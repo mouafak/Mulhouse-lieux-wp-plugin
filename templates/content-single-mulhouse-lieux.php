@@ -1,5 +1,5 @@
 <div class="top_heading_out">
-    <div class="top_site_main" style="color: #ffffff;background-image:url(<?php echo get_the_post_thumbnail_url($post->ID); ?>);"><span class="overlay-top-header" style="background-color:rgba(0,0,0,0.5);"></span>
+    <div class="top_site_main" style="color: #ffffff;background:#111;"><span class="overlay-top-header" style="background-color:rgba(0,0,0,0.5);"></span>
         <div class="page-title-wrapper">
             <div class="banner-wrapper container">
                 <h2><?php the_title(); ?></h2>
@@ -36,6 +36,23 @@
                         <div class="entry-tag-share">
                         <div id="map"></div>
                         </div>
+                        <!-- open with google map button -->
+
+                        <div class="entry-tag-share">
+                            <div class="row">
+                                
+                                <div class="col-sm-4">
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <a href="http://google.ca/maps?q=<?php echo str_replace(" " , "+" , get_post_meta( $post->ID,   "adresse_postal_value_key", true )); ?>" target="_blank" rel="noopener      noreferrer"> open with google maps</a>
+                                </div>
+
+                                <div class="col-sm-4">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end google map button -->
 
                         <div class="entry-tag-share">
                             <div class="row">
@@ -53,6 +70,7 @@
                                 </div>
                             </div>
 		                </div>
+
 
 		                <?php //do_action( 'thim_about_author' ); ?>
 

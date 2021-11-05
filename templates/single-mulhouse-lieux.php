@@ -26,7 +26,7 @@ $map_points = apply_filters("map_box_points_filters", $map_points);
 echo
 "
 <script>
-mapboxgl.accessToken = 'pk.eyJ1IjoibW91YWZhayIsImEiOiJja3MxbnN6dXUxdm55MnZuOHFpMjU1eTVnIn0.7Mx_gCUL5fUWYZFPt5KQqQ';
+mapboxgl.accessToken = '".$map_points["at"]."';
 const map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
