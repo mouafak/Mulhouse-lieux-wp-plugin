@@ -103,3 +103,17 @@
 .mapboxgl-map{
     min-height: 600px !important;
 }
+
+
+
+.open_with_google_map{
+    font-size: 17px !important;
+    color: #000;
+    border : 1px solid #1e73be;
+    border : 1px solid ;
+}
+
+.open_with_google_map:hover{
+    color: #1e73be;
+    border : 1px solid #000;
+}

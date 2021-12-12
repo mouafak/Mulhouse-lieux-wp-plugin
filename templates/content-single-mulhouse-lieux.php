@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <a href="http://google.ca/maps?q=<?php echo str_replace(" " , "+" , get_post_meta( $post->ID,   "adresse_postal_value_key", true )); ?>" target="_blank" rel="noopener      noreferrer"> open with google maps</a>
+                                    <a class="widget-button tiny-rounded normal custom_style position-after open_with_google_map" href="http://google.ca/maps?q=<?php echo str_replace(" " , "+" , get_post_meta( $post->ID,   "adresse_postal_value_key", true )); ?>" target="_blank">Ouvrir avec google maps<i class="fas fa-arrow-right" style="font-size: 14px; padding-left: 10px;"></i> </a>
                                 </div>
 
                                 <div class="col-sm-4">
